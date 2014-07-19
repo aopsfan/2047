@@ -11,11 +11,36 @@
 		108C09271978929E0065FAAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09261978929E0065FAAB /* ViewController.swift */; };
 		108C092A1978929E0065FAAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 108C09281978929E0065FAAB /* Main.storyboard */; };
 		108C092C1978929E0065FAAB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 108C092B1978929E0065FAAB /* Images.xcassets */; };
-		108C09381978929E0065FAAB /* _047Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09371978929E0065FAAB /* _047Tests.swift */; };
+		108C0947197894C60065FAAB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0946197894C60065FAAB /* Game.swift */; };
+		108C0948197894C60065FAAB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0946197894C60065FAAB /* Game.swift */; };
+		108C094A197894CD0065FAAB /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0949197894CD0065FAAB /* Board.swift */; };
+		108C094B197894CD0065FAAB /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0949197894CD0065FAAB /* Board.swift */; };
+		108C094D197894D50065FAAB /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C094C197894D50065FAAB /* Tile.swift */; };
+		108C094E197894D50065FAAB /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C094C197894D50065FAAB /* Tile.swift */; };
+		108C0950197894F10065FAAB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C094F197894F10065FAAB /* Location.swift */; };
+		108C0951197894F10065FAAB /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C094F197894F10065FAAB /* Location.swift */; };
+		108C0953197894F70065FAAB /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0952197894F70065FAAB /* Vector.swift */; };
+		108C0954197894F70065FAAB /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0952197894F70065FAAB /* Vector.swift */; };
+		10B49DFE197A286800102ABA /* TileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B49DFD197A286800102ABA /* TileTests.swift */; };
+		10B49E00197A51E800102ABA /* BoardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B49DFF197A51E800102ABA /* BoardTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		108C09321978929E0065FAAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 108C09171978929E0065FAAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 108C091E1978929E0065FAAB;
+			remoteInfo = 2047;
+		};
+		108C0941197892CE0065FAAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 108C09171978929E0065FAAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 108C091E1978929E0065FAAB;
+			remoteInfo = 2047;
+		};
+		108C0943197892CE0065FAAB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 108C09171978929E0065FAAB /* Project object */;
 			proxyType = 1;
@@ -33,7 +58,13 @@
 		108C092B1978929E0065FAAB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		108C09311978929E0065FAAB /* 2047Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 2047Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		108C09361978929E0065FAAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		108C09371978929E0065FAAB /* _047Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _047Tests.swift; sourceTree = "<group>"; };
+		108C0946197894C60065FAAB /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		108C0949197894CD0065FAAB /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		108C094C197894D50065FAAB /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		108C094F197894F10065FAAB /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		108C0952197894F70065FAAB /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		10B49DFD197A286800102ABA /* TileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileTests.swift; sourceTree = "<group>"; };
+		10B49DFF197A51E800102ABA /* BoardTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +106,7 @@
 		108C09211978929E0065FAAB /* 2047 */ = {
 			isa = PBXGroup;
 			children = (
+				108C0945197893120065FAAB /* Model */,
 				108C09241978929E0065FAAB /* AppDelegate.swift */,
 				108C09261978929E0065FAAB /* ViewController.swift */,
 				108C09281978929E0065FAAB /* Main.storyboard */,
@@ -95,8 +127,9 @@
 		108C09341978929E0065FAAB /* 2047Tests */ = {
 			isa = PBXGroup;
 			children = (
-				108C09371978929E0065FAAB /* _047Tests.swift */,
 				108C09351978929E0065FAAB /* Supporting Files */,
+				10B49DFD197A286800102ABA /* TileTests.swift */,
+				10B49DFF197A51E800102ABA /* BoardTests.swift */,
 			);
 			path = 2047Tests;
 			sourceTree = "<group>";
@@ -107,6 +140,18 @@
 				108C09361978929E0065FAAB /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		108C0945197893120065FAAB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				108C0946197894C60065FAAB /* Game.swift */,
+				108C094C197894D50065FAAB /* Tile.swift */,
+				108C0949197894CD0065FAAB /* Board.swift */,
+				108C094F197894F10065FAAB /* Location.swift */,
+				108C0952197894F70065FAAB /* Vector.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +186,8 @@
 			);
 			dependencies = (
 				108C09331978929E0065FAAB /* PBXTargetDependency */,
+				108C0942197892CE0065FAAB /* PBXTargetDependency */,
+				108C0944197892CE0065FAAB /* PBXTargetDependency */,
 			);
 			name = 2047Tests;
 			productName = 2047Tests;
@@ -209,6 +256,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				108C09271978929E0065FAAB /* ViewController.swift in Sources */,
+				108C0947197894C60065FAAB /* Game.swift in Sources */,
+				108C094D197894D50065FAAB /* Tile.swift in Sources */,
+				108C0953197894F70065FAAB /* Vector.swift in Sources */,
+				108C094A197894CD0065FAAB /* Board.swift in Sources */,
+				108C0950197894F10065FAAB /* Location.swift in Sources */,
 				108C09251978929E0065FAAB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,7 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				108C09381978929E0065FAAB /* _047Tests.swift in Sources */,
+				108C0948197894C60065FAAB /* Game.swift in Sources */,
+				10B49DFE197A286800102ABA /* TileTests.swift in Sources */,
+				108C0951197894F10065FAAB /* Location.swift in Sources */,
+				108C094B197894CD0065FAAB /* Board.swift in Sources */,
+				108C0954197894F70065FAAB /* Vector.swift in Sources */,
+				10B49E00197A51E800102ABA /* BoardTests.swift in Sources */,
+				108C094E197894D50065FAAB /* Tile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +286,16 @@
 			isa = PBXTargetDependency;
 			target = 108C091E1978929E0065FAAB /* 2047 */;
 			targetProxy = 108C09321978929E0065FAAB /* PBXContainerItemProxy */;
+		};
+		108C0942197892CE0065FAAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 108C091E1978929E0065FAAB /* 2047 */;
+			targetProxy = 108C0941197892CE0065FAAB /* PBXContainerItemProxy */;
+		};
+		108C0944197892CE0065FAAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 108C091E1978929E0065FAAB /* 2047 */;
+			targetProxy = 108C0943197892CE0065FAAB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -397,6 +465,7 @@
 				108C093D1978929E0065FAAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		108C093E1978929E0065FAAB /* Build configuration list for PBXNativeTarget "2047Tests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +474,7 @@
 				108C09401978929E0065FAAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
