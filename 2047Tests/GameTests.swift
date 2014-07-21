@@ -64,29 +64,34 @@ class GameTests: XCTestCase {
         }
         
         func after(identifier: String) {
-            XCTAssertEqual(self.game.tiles.count, 2, "after \(identifier)")
             XCTAssertEqual(self.game.score, 0, "after \(identifier)")
-            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile, "after \(identifier)")
         }
         
         func whenMovingRight() {
             self.game.move(Right())
             XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
+            XCTAssertEqual(self.game.tiles.count, 2)
+            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
         }
         
         func whenMovingLeft() {
             self.game.move(Left())
             XCTAssertEqual(self.game.tiles[Location(0, 0)]!, firstTile)
+            XCTAssertEqual(self.game.tiles.count, 2)
+            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
         }
         
         func whenMovingUp() {
             self.game.move(Up())
             XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
+            XCTAssertEqual(self.game.tiles.count, 1)
         }
         
         func whenMovingDown() {
             self.game.move(Down())
             XCTAssertEqual(self.game.tiles[Location(2, 3)]!, firstTile)
+            XCTAssertEqual(self.game.tiles.count, 2)
+            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
         }
         
         let tests = [

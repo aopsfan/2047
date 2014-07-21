@@ -39,15 +39,17 @@ class Game {
     }
     
     func move(move: Move) {
+        var tileMoved = false
         var tileMovedThisIteration = false
         
         do {
             _moveOnce(move) { anyTileMoved in
                 tileMovedThisIteration = anyTileMoved
+                tileMoved = anyTileMoved || tileMoved
             }
         } while tileMovedThisIteration == true
         
-        self.addTiles(1)
+        if tileMoved { self.addTiles(1) }
     }
     
     func _moveOnce(move: Move, _ finished: (anyTileMoved: Bool) -> ()) {
@@ -62,7 +64,7 @@ class Game {
             
             if tile {
                 _moveSingleTileOnce(fromLocation, tile!, move) { moved in
-                    if moved { anyTileMoved = true }
+                    anyTileMoved = moved || anyTileMoved
                 }
             }
         }
