@@ -18,7 +18,7 @@ struct Location: Equatable, Hashable {
     }
     
     func stringValue() -> String {
-        return ""
+        return "(\(x), \(y))"
     }
     
     var hashValue: Int {

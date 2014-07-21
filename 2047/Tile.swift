@@ -18,8 +18,12 @@ class Tile: Equatable, Hashable {
         self.value = value
     }
     
+    func stringValue() -> String {
+        return "\(self.location.stringValue()).\(self.value).\(canMerge ? 1 : 0)"
+    }
+    
     var hashValue: Int {
-        return "\(self.location.stringValue()).\(self.value).\(canMerge ? 1 : 0)".hash
+        return stringValue().hash
     }
     
     func goTo(location: Location, impedingTile: Tile?, _ closure: (moved: Bool, merged: Bool) -> ()) {
