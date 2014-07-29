@@ -23,6 +23,16 @@ class GameTests: XCTestCase {
     var game = Game()
     let tileGenerator = PresetTileGenerator()
     
+    func describe(identifier: String, beforeEach: () -> (), _ specs: [String: () -> ()]) {
+        println("\n>>>>>> SPEC BEGIN: \(identifier) <<<<<<\n\n")
+        for spec in specs {
+            println("\(identifier) \(spec.0)")
+            beforeEach()
+            spec.1()
+        }
+        println("\n\n>>>>>> SPEC END: \(identifier) <<<<<<\n")
+    }
+    
     func resetGame() {
         game = Game()
         game.tileGenerationStrategy = self.tileGenerator
@@ -55,58 +65,86 @@ class GameTests: XCTestCase {
         var firstTile: Tile!
         var queuedTile: Tile!
         
-        func before(identifier: String) {
-            resetGame()
-            firstTile = Tile(location: Location(2, 0), value: 1)
-            queuedTile = Tile(location: Location(2, 1), value: 1)
-            self.tileGenerator.nextTiles = [firstTile, queuedTile]
-            self.game.addTiles(1)
-        }
+        describe("when one tile moved",
+            beforeEach: {
+                self.resetGame()
+                firstTile = Tile(location: Location(2, 0), value: 1)
+                queuedTile = Tile(location: Location(2, 1), value: 1)
+                self.tileGenerator.nextTiles = [firstTile, queuedTile]
+                self.game.addTiles(1)
+            }, [
+                "should fall right when moved right": {
+                    self.game.move(Right())
+                    XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                },
+                
+                "should fall left when moved left": {
+                    self.game.move(Left())
+                    XCTAssertEqual(self.game.tiles[Location(0, 0)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                },
+                
+                "should do nothing when moved up": {
+                    self.game.move(Up())
+                    XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles.count, 1)
+                },
+                
+                "should fall down when moved down": {
+                    self.game.move(Down())
+                    XCTAssertEqual(self.game.tiles[Location(2, 3)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                }
+            ])
+    }
+    
+    func testMoveTwoTilesOfSameValue() {
+        var (firstTile, secondTile): (Tile!, Tile!)
+        var queuedTile: Tile!
         
-        func after(identifier: String) {
-            XCTAssertEqual(self.game.score, 0, "after \(identifier)")
-        }
-        
-        func whenMovingRight() {
-            self.game.move(Right())
-            XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
-            XCTAssertEqual(self.game.tiles.count, 2)
-            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
-        }
-        
-        func whenMovingLeft() {
-            self.game.move(Left())
-            XCTAssertEqual(self.game.tiles[Location(0, 0)]!, firstTile)
-            XCTAssertEqual(self.game.tiles.count, 2)
-            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
-        }
-        
-        func whenMovingUp() {
-            self.game.move(Up())
-            XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
-            XCTAssertEqual(self.game.tiles.count, 1)
-        }
-        
-        func whenMovingDown() {
-            self.game.move(Down())
-            XCTAssertEqual(self.game.tiles[Location(2, 3)]!, firstTile)
-            XCTAssertEqual(self.game.tiles.count, 2)
-            XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
-        }
-        
-        let tests = [
-            "whenMovingRight": whenMovingRight,
-            "whenMovingLeft": whenMovingLeft,
-            "whenMovingUp": whenMovingUp,
-            "whenMovingDown": whenMovingDown
-        ]
-        
-        for (identifier, closure) in tests {
-            println("SPEC BEGAN: \(identifier)")
-            before(identifier)
-            closure()
-            after(identifier)
-            println("SPEC ENDED: \(identifier)")
-        }
+        describe("when two tiles of same value moved",
+            beforeEach: {
+                self.resetGame()
+                firstTile = Tile(location: Location(2, 0), value: 1)
+                secondTile = Tile(location: Location(3, 0), value: 1)
+                queuedTile = Tile(location: Location(2, 1), value: 1)
+                self.tileGenerator.nextTiles = [firstTile, secondTile, queuedTile]
+                self.game.addTiles(2)
+            }, [
+                "should merge tiles aligned right when moved right": {
+                    self.game.move(Right())
+                    XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
+                    XCTAssertEqual(firstTile.value, 3)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                },
+                
+                "should merge tiles and fall left when moved left": {
+                    self.game.move(Left())
+                    XCTAssertEqual(self.game.tiles[Location(0, 0)]!, secondTile)
+                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                },
+                
+                "should do nothing when moved up": {
+                    self.game.move(Up())
+                    XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles[Location(3, 0)]!, secondTile)
+                    XCTAssertEqual(self.game.tiles.count, 2)
+                },
+                
+                "should fall down when moved down": {
+                    self.game.move(Down())
+                    XCTAssertEqual(self.game.tiles[Location(2, 3)]!, firstTile)
+                    XCTAssertEqual(self.game.tiles[Location(3, 3)]!, secondTile)
+                    XCTAssertEqual(self.game.tiles.count, 3)
+                    XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
+                },
+            ])
     }
 }
