@@ -30,6 +30,7 @@ class Game {
     var tiles = [Location: Tile]()
     var score = 0
     var tileGenerationStrategy: TileGenerationStrategy = RandomTileGenerator()
+    var logsMoves = false
     
     func addTiles(numberOfTiles: Int) {
         for _ in 0..<numberOfTiles {
@@ -39,6 +40,7 @@ class Game {
     }
     
     func move(move: Move) {
+        if logsMoves { println("\nmoving \(move) {") }
         var tileMoved = false
         var tileMovedThisIteration = false
         
@@ -49,10 +51,20 @@ class Game {
             }
         } while tileMovedThisIteration == true
         
-        if tileMoved { self.addTiles(1) }
+        if tileMoved { self.addTiles(1); if logsMoves { println("\tadding next tile") } }
+        if logsMoves {
+            println("}")
+            var formattedTiles = Dictionary<String, String>()
+            for (location, tile) in tiles {
+                formattedTiles[location.stringValue()] = tile.stringValue()
+            }
+            
+            println("tiles are \(formattedTiles)\n")
+        }
     }
     
     func _moveOnce(move: Move, _ finished: (anyTileMoved: Bool) -> ()) {
+        if logsMoves { println("\tmoving once {") }
         let sortedLocations = sorted(self.board.allLocations()) {
             return move.locationBeforeLocation($0, $1)
         } // TODO: this is calculated way to often
@@ -70,22 +82,43 @@ class Game {
         }
         
         finished(anyTileMoved: anyTileMoved)
+        if logsMoves { println("\t}") }
     }
     
     func _moveSingleTileOnce(fromLocation: Location, _ tile: Tile, _ move: Move, _ finished: (moved: Bool) -> ()) {
+        if logsMoves { println("\t\tmoving single tile once {") }
         let toLocation = Location(fromLocation.x + move.vector().xDistance, fromLocation.y + move.vector().yDistance)
         let toTile = self.tiles[toLocation]
         
+        if logsMoves {
+            println("\t\t\ttile: \(tile.stringValue())")
+            println("\t\t\tto location: \(toLocation.stringValue())")
+            let toTileStringValue = toTile ? toTile!.stringValue() : "no impeding tile"
+            println("\t\t\timpeding tile: \(toTileStringValue)")
+            println("\t\t\tstatus {")
+        }
+        
         if !contains(self.board.allLocations(), toLocation) { // Tile is already at edge of board
             finished(moved: false)
+            if logsMoves {
+                println("\t\t\t\tnot moving because tile is at edge of board")
+                println("\t\t\t}\n\t\t}")
+            }
             return
         }
         
         tile.goTo(toLocation, impedingTile: toTile) { (moved, merged) in
-            self.tiles[fromLocation] = nil
-            self.tiles[toLocation] = tile
+            if self.logsMoves {
+                println("\t\t\t\tmoved: \(moved)")
+                println("\t\t\t\tmerged: \(merged)")
+            }
+            if moved {
+                self.tiles[fromLocation] = nil
+                self.tiles[toLocation] = tile
+            }
             finished(moved: moved)
         }
+        if logsMoves { println("\t\t\t}\n\t\t}") }
     }
     
     func _availableSpaces() -> [Location] {
