@@ -27,7 +27,7 @@ class Tile: Equatable, Hashable {
     }
     
     func goTo(location: Location, impedingTile: Tile?, _ closure: (moved: Bool, merged: Bool) -> ()) {
-        let moved = impedingTile == nil || (impedingTile != nil && impedingTile?.value == self.value && self.canMerge)
+        let moved = impedingTile == nil || (impedingTile?.value == self.value && self.canMerge && impedingTile!.canMerge)
         let merged = moved && impedingTile != nil
         
         if moved { self.location = location }

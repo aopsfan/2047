@@ -82,8 +82,6 @@
 		10B8913C197C5B99004C8316 /* Down.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Down.swift; sourceTree = "<group>"; };
 		10B89140197C5D66004C8316 /* Left.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Left.swift; sourceTree = "<group>"; };
 		10B89143197C5D90004C8316 /* Right.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Right.swift; sourceTree = "<group>"; };
-		10CDE75B1987608C008C5A76 /* BDDTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BDDTestCase.swift; path = ../../../../.Trash/BDDTestCase.swift; sourceTree = "<group>"; };
-		10CDE75C1987608C008C5A76 /* BDDTestCaseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BDDTestCaseTests.swift; path = ../../../../.Trash/BDDTestCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,8 +148,6 @@
 				10B49DFD197A286800102ABA /* TileTests.swift */,
 				10B49DFF197A51E800102ABA /* BoardTests.swift */,
 				10B21135197C7EAF00568030 /* GameTests.swift */,
-				10CDE75B1987608C008C5A76 /* BDDTestCase.swift */,
-				10CDE75C1987608C008C5A76 /* BDDTestCaseTests.swift */,
 			);
 			path = 2047Tests;
 			sourceTree = "<group>";
