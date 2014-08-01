@@ -8,6 +8,12 @@
 
 import Foundation
 
+protocol GameDelegate {
+    func game(game: Game, didAdd tile: Tile)
+    func game(game: Game, didMove tile: Tile, from fromLocation: Location)
+    func game(game: Game, didRemoveTileAt location: Location)
+}
+
 protocol TileGenerationStrategy {
     func newTile(availableSpaces: [Location]) -> Tile
 }
@@ -17,7 +23,7 @@ class RandomTileGenerator : TileGenerationStrategy {
         let locationIndex = arc4random() % UInt32(availableSpaces.count)
         let location = availableSpaces[Int(locationIndex)]
         
-        let availableValues = [2, 4]
+        let availableValues = [1, 3]
         let valueIndex = arc4random() % 2
         let value = availableValues[Int(valueIndex)]
         
@@ -30,11 +36,16 @@ class Game {
     var tiles = [Location: Tile]()
     var score = 0
     var tileGenerationStrategy: TileGenerationStrategy = RandomTileGenerator()
+    var delegate: GameDelegate? = nil
     
     func addTiles(numberOfTiles: Int) {
         for _ in 0..<numberOfTiles {
             let tile = self.tileGenerationStrategy.newTile(_availableSpaces())
             self.tiles[tile.location] = tile
+            
+            if delegate {
+                delegate!.game(self, didAdd: tile)
+            }
         }
     }
     
@@ -85,12 +96,20 @@ class Game {
         }
         
         tile.goTo(toLocation, impedingTile: toTile) { (moved, merged) in
+            if merged {
+                tile.canMerge = false
+                
+                if self.delegate {
+                    self.delegate!.game(self, didRemoveTileAt: toLocation)
+                }
+            }
             if moved {
                 self.tiles[fromLocation] = nil
                 self.tiles[toLocation] = tile
-            }
-            if merged {
-                tile.canMerge = false
+                
+                if self.delegate {
+                    self.delegate!.game(self, didMove: tile, from: fromLocation)
+                }
             }
             finished(moved: moved)
         }

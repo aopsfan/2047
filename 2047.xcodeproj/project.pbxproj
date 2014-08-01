@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1021F0BF198B4F2300993F6B /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021F0BE198B4F2300993F6B /* TileView.swift */; };
+		1021F0C1198B51B500993F6B /* TileGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021F0C0198B51B500993F6B /* TileGridView.swift */; };
 		108C09251978929E0065FAAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09241978929E0065FAAB /* AppDelegate.swift */; };
-		108C09271978929E0065FAAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09261978929E0065FAAB /* ViewController.swift */; };
+		108C09271978929E0065FAAB /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09261978929E0065FAAB /* GameplayViewController.swift */; };
 		108C092A1978929E0065FAAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 108C09281978929E0065FAAB /* Main.storyboard */; };
 		108C092C1978929E0065FAAB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 108C092B1978929E0065FAAB /* Images.xcassets */; };
 		108C0947197894C60065FAAB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C0946197894C60065FAAB /* Game.swift */; };
@@ -61,10 +63,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1021F0BE198B4F2300993F6B /* TileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		1021F0C0198B51B500993F6B /* TileGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileGridView.swift; sourceTree = "<group>"; };
 		108C091F1978929E0065FAAB /* 2047.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2047.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		108C09231978929E0065FAAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		108C09241978929E0065FAAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		108C09261978929E0065FAAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		108C09261978929E0065FAAB /* GameplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameplayViewController.swift; sourceTree = "<group>"; };
 		108C09291978929E0065FAAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		108C092B1978929E0065FAAB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		108C09311978929E0065FAAB /* 2047Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 2047Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +106,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1021F0BC198B4DB900993F6B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				108C09261978929E0065FAAB /* GameplayViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1021F0BD198B4F0000993F6B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1021F0BE198B4F2300993F6B /* TileView.swift */,
+				1021F0C0198B51B500993F6B /* TileGridView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		108C09161978929E0065FAAB = {
 			isa = PBXGroup;
 			children = (
@@ -123,9 +144,10 @@
 		108C09211978929E0065FAAB /* 2047 */ = {
 			isa = PBXGroup;
 			children = (
+				1021F0BD198B4F0000993F6B /* View */,
+				1021F0BC198B4DB900993F6B /* Controller */,
 				108C0945197893120065FAAB /* Model */,
 				108C09241978929E0065FAAB /* AppDelegate.swift */,
-				108C09261978929E0065FAAB /* ViewController.swift */,
 				108C09281978929E0065FAAB /* Main.storyboard */,
 				108C092B1978929E0065FAAB /* Images.xcassets */,
 				108C09221978929E0065FAAB /* Supporting Files */,
@@ -287,12 +309,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				10B89144197C5D90004C8316 /* Right.swift in Sources */,
-				108C09271978929E0065FAAB /* ViewController.swift in Sources */,
+				108C09271978929E0065FAAB /* GameplayViewController.swift in Sources */,
+				1021F0BF198B4F2300993F6B /* TileView.swift in Sources */,
 				108C0947197894C60065FAAB /* Game.swift in Sources */,
 				10B8913A197C5882004C8316 /* Up.swift in Sources */,
 				108C094D197894D50065FAAB /* Tile.swift in Sources */,
 				108C0953197894F70065FAAB /* Vector.swift in Sources */,
 				10B89141197C5D66004C8316 /* Left.swift in Sources */,
+				1021F0C1198B51B500993F6B /* TileGridView.swift in Sources */,
 				10B89133197B84D1004C8316 /* Move.swift in Sources */,
 				108C094A197894CD0065FAAB /* Board.swift in Sources */,
 				10B8913D197C5B99004C8316 /* Down.swift in Sources */,
