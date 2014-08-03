@@ -9,9 +9,10 @@
 import Foundation
 
 protocol GameDelegate {
-    func game(game: Game, didAdd tile: Tile)
-    func game(game: Game, didMove tile: Tile, from fromLocation: Location)
+    func game(game: Game, didAddTile tile: Tile)
+    func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location)
     func game(game: Game, didRemoveTileAt location: Location)
+    func game(game: Game, didUpdateScore score: Int)
 }
 
 protocol TileGenerationStrategy {
@@ -34,7 +35,8 @@ class RandomTileGenerator : TileGenerationStrategy {
 class Game {
     var board = Board(4, 4)
     var tiles = [Location: Tile]()
-    var score = 0
+    var _trueScore = -1
+    var score: Int { return max(0, _trueScore) }
     var tileGenerationStrategy: TileGenerationStrategy = RandomTileGenerator()
     var delegate: GameDelegate? = nil
     
@@ -44,7 +46,7 @@ class Game {
             self.tiles[tile.location] = tile
             
             if delegate {
-                delegate!.game(self, didAdd: tile)
+                delegate!.game(self, didAddTile: tile)
             }
         }
     }
@@ -97,10 +99,12 @@ class Game {
         
         tile.goTo(toLocation, impedingTile: toTile) { (moved, merged) in
             if merged {
+                self._trueScore += tile.value + 1
                 tile.canMerge = false
                 
                 if self.delegate {
                     self.delegate!.game(self, didRemoveTileAt: toLocation)
+                    self.delegate!.game(self, didUpdateScore: self.score)
                 }
             }
             if moved {
@@ -108,7 +112,7 @@ class Game {
                 self.tiles[toLocation] = tile
                 
                 if self.delegate {
-                    self.delegate!.game(self, didMove: tile, from: fromLocation)
+                    self.delegate!.game(self, didMoveTile: tile, from: fromLocation)
                 }
             }
             finished(moved: moved)

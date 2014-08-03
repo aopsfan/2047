@@ -310,15 +310,6 @@ class GameTests: XCTestCase {
         var (row4Tile1, row4Tile2): (Tile!, Tile!)
         var (queuedTile1, queuedTile2, queuedTile3, queuedTile4): (Tile!, Tile!, Tile!, Tile!)
         
-        
-        // ^
-        
-        // 3  3  31 127
-        // _  _  _  127
-        // _  _  _  _
-        // _  3  _  _
-        
-        
         describe("advanced case",
             beforeEach: {
                 row1Tile1 = Tile(location: Location(0, 0), value: 3)
@@ -356,6 +347,7 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(2, 3)]!.value, 15)
                     XCTAssertEqual(self.game.tiles[Location(3, 3)]!.value, 63)
                     XCTAssertEqual(self.game.tiles.count, 8)
+                    XCTAssertEqual(self.game.score, 0)
                 },
                 
                 "should properly place tiles after first move": {
@@ -376,6 +368,7 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(2, 3)]!.value, 15)
                     XCTAssertEqual(self.game.tiles[Location(3, 3)]!.value, 63)
                     XCTAssertEqual(self.game.tiles.count, 8)
+                    XCTAssertEqual(self.game.score, 7)
                 },
                 
                 "should properly place tiles after second move": {
@@ -396,6 +389,7 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(3, 1)]!.value, 63)
                     XCTAssertEqual(self.game.tiles[Location(3, 2)]!.value, 63)
                     XCTAssertEqual(self.game.tiles.count, 7)
+                    XCTAssertEqual(self.game.score, 7 + 16 + 64)
                 },
                 
                 "should properly place tiles after third move": {
@@ -416,6 +410,7 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(3, 1)]!.value, 127)
                     XCTAssertEqual(self.game.tiles[Location(1, 3)]!.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 6)
+                    XCTAssertEqual(self.game.score, 7 + 16 + 64 + 32 + 128)
                 },
                 
                 "should properly place tiles after fourth move": {
@@ -436,6 +431,7 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!.value, 255)
                     XCTAssertEqual(self.game.tiles[Location(0, 1)]!.value, 1)
                     XCTAssertEqual(self.game.tiles.count, 5)
+                    XCTAssertEqual(self.game.score, 7 + 16 + 64 + 32 + 128 + 8 + 256)
                 }
             ])
     }

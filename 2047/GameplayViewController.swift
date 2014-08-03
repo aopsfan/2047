@@ -9,14 +9,15 @@
 import UIKit
 
 class GameplayViewController : UIViewController, GameDelegate {
-    var gridView: TileGridView { return self.view as TileGridView }
+    @IBOutlet var gridView: TileGridView
+    @IBOutlet var scoreLabel: UILabel
     var game = Game()
     
-    func game(game: Game, didAdd tile: Tile) {
+    func game(game: Game, didAddTile tile: Tile) {
         gridView.addTileViewAt(tile.location, withLabel: "\(tile.value)")
     }
     
-    func game(game: Game, didMove tile: Tile, from fromLocation: Location) {
+    func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location) {
         gridView.moveTileViewAt(fromLocation, to: tile.location)
         gridView.setLabelTextForTileAt(tile.location, labelText: "\(tile.value)")
     }
@@ -25,10 +26,17 @@ class GameplayViewController : UIViewController, GameDelegate {
         gridView.removeTileAt(location)
     }
     
+    func game(game: Game, didUpdateScore score: Int) {
+        refreshScore()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         game.delegate = self
         game.addTiles(2)
+        
+        refreshScore()
         
         let upRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUp")
         let downRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
@@ -62,6 +70,10 @@ class GameplayViewController : UIViewController, GameDelegate {
     
     func swipeLeft() {
         game.move(Left())
+    }
+    
+    func refreshScore() {
+        scoreLabel.text = "\(game.score)"
     }
 }
 
