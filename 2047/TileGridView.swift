@@ -12,6 +12,7 @@ class TileGridView: UIView {
     let tileViewSize = CGSizeMake(70, 70)
     let margin = 8
     var tileViews = [Location: TileView]()
+    var _coveredTileViews = [TileView]()
     
     init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,11 +23,29 @@ class TileGridView: UIView {
         super.init(coder: aDecoder)
     }
     
+    func animate(animations: () -> ()) {
+        UIView.animateWithDuration(0.3, animations: animations, completion: { completed in
+            self.removeCoveredTileViews()
+            })
+    }
+    
+    func removeCoveredTileViews() {
+        for tileView in _coveredTileViews {
+            tileView.removeFromSuperview()
+        }
+        
+        _coveredTileViews.removeAll()
+    }
+    
     func addTileViewAt(location: Location, withLabel label: String) {
         let tileView = TileView(frame: _frameFor(location))
         tileView.labelText = label
         tileViews[location] = tileView
-        self.addSubview(tileView)
+        
+        // fade-in animation
+        tileView.alpha = 0.0
+        self.insertSubview(tileView, atIndex: 0)
+        tileView.alpha = 1.0
     }
     
     func removeTileAt(location: Location) {
@@ -37,8 +56,12 @@ class TileGridView: UIView {
     
     func moveTileViewAt(fromLocation: Location, to toLocation: Location) {
         let tileView = tileViews[fromLocation]
+        self.bringSubviewToFront(tileView)
         tileView!.frame = _frameFor(toLocation)
         tileViews[fromLocation] = nil
+        
+        let oldTileView = tileViews[toLocation]
+        if oldTileView { _coveredTileViews.append(oldTileView!) }
         tileViews[toLocation] = tileView
     }
     

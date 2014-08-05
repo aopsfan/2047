@@ -22,10 +22,6 @@ class GameplayViewController : UIViewController, GameDelegate {
         gridView.setLabelTextForTileAt(tile.location, labelText: "\(tile.value)")
     }
     
-    func game(game: Game, didRemoveTileAt location: Location) {
-        gridView.removeTileAt(location)
-    }
-    
     func game(game: Game, didUpdateScore score: Int) {
         refreshScore()
     }
@@ -77,7 +73,7 @@ class GameplayViewController : UIViewController, GameDelegate {
     }
     
     func _move(move: Move) {
-        UIView.animateWithDuration(0.5) {
+        gridView.animate {
             self.game.move(move)
         }
     }

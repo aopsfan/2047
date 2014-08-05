@@ -11,7 +11,6 @@ import Foundation
 protocol GameDelegate {
     func game(game: Game, didAddTile tile: Tile)
     func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location)
-    func game(game: Game, didRemoveTileAt location: Location)
     func game(game: Game, didUpdateScore score: Int)
 }
 
@@ -102,7 +101,6 @@ class Game {
                 tile.canMerge = false
                 
                 if self.delegate {
-                    self.delegate!.game(self, didRemoveTileAt: toLocation)
                     self.delegate!.game(self, didUpdateScore: self.score)
                 }
             }
