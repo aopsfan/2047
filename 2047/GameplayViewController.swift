@@ -9,8 +9,8 @@
 import UIKit
 
 class GameplayViewController : UIViewController, GameDelegate {
-    @IBOutlet var gridView: TileGridView
-    @IBOutlet var scoreLabel: UILabel
+    @IBOutlet var gridView: TileGridView!
+    @IBOutlet var scoreLabel: UILabel!
     var game = Game()
     
     func game(game: Game, didAddTile tile: Tile) {

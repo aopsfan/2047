@@ -52,49 +52,48 @@ class Game {
     }
     
     func move(move: Move) {
-        var tileMoved = false
-        var tileMovedThisIteration = false
+        var anyTileMoved = false
         
-        do {
-            _moveOnce(move) { anyTileMoved in
-                tileMovedThisIteration = anyTileMoved
-                tileMoved = anyTileMoved || tileMoved
+        let sortedLocations = sorted(self.board.allLocations()) {
+            return move.locationBeforeLocation($0, $1)
+        }
+        
+        for fromLocation in sortedLocations {
+            let tile = self.tiles[fromLocation]
+            if !tile { continue }
+            if _moveTile(tile!, move: move) {
+                if self.delegate {
+                    self.delegate!.game(self, didMoveTile: tile!, from: fromLocation)
+                }
+                anyTileMoved = true
             }
-        } while tileMovedThisIteration == true
+        }
         
-        if tileMoved {
+        if anyTileMoved {
             for (_, tile) in tiles { tile.canMerge = true }
             self.addTiles(1)
         }
     }
     
-    func _moveOnce(move: Move, _ finished: (anyTileMoved: Bool) -> ()) {
-        let sortedLocations = sorted(self.board.allLocations()) {
-            return move.locationBeforeLocation($0, $1)
-        } // TODO: this is calculated way to often
+    func _moveTile(tile: Tile, move: Move) -> Bool {
+        var tileMoved = false
+        var tileMovedThisIteration = false
         
-        var anyTileMoved = false
+        do {
+            tileMovedThisIteration = _moveTileOnce(tile, move: move)
+            tileMoved = tileMoved || tileMovedThisIteration
+        } while tileMovedThisIteration
         
-        for fromLocation in sortedLocations {
-            let tile = self.tiles[fromLocation]
-            
-            if tile {
-                _moveSingleTileOnce(fromLocation, tile!, move) { moved in
-                    anyTileMoved = moved || anyTileMoved
-                }
-            }
-        }
-        
-        finished(anyTileMoved: anyTileMoved)
+        return tileMoved
     }
     
-    func _moveSingleTileOnce(fromLocation: Location, _ tile: Tile, _ move: Move, _ finished: (moved: Bool) -> ()) {
+    func _moveTileOnce(tile: Tile, move: Move) -> Bool { // return whether tile moved
+        let fromLocation = tile.location
         let toLocation = Location(fromLocation.x + move.vector().xDistance, fromLocation.y + move.vector().yDistance)
         let toTile = self.tiles[toLocation]
         
         if !contains(self.board.allLocations(), toLocation) { // Tile is already at edge of board
-            finished(moved: false)
-            return
+            return false
         }
         
         tile.goTo(toLocation, impedingTile: toTile) { (moved, merged) in
@@ -110,13 +109,10 @@ class Game {
             if moved {
                 self.tiles[fromLocation] = nil
                 self.tiles[toLocation] = tile
-                
-                if self.delegate {
-                    self.delegate!.game(self, didMoveTile: tile, from: fromLocation)
-                }
             }
-            finished(moved: moved)
         }
+        
+        return tile.location == toLocation
     }
     
     func _availableSpaces() -> [Location] {
