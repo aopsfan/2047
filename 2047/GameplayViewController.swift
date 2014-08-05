@@ -57,23 +57,29 @@ class GameplayViewController : UIViewController, GameDelegate {
     }
     
     func swipeUp() {
-        game.move(Up())
+        _move(Up())
     }
     
     func swipeDown() {
-        game.move(Down())
+        _move(Down())
     }
     
     func swipeRight() {
-        game.move(Right())
+        _move(Right())
     }
     
     func swipeLeft() {
-        game.move(Left())
+        _move(Left())
     }
     
     func refreshScore() {
         scoreLabel.text = "\(game.score)"
+    }
+    
+    func _move(move: Move) {
+        UIView.animateWithDuration(0.5) {
+            self.game.move(move)
+        }
     }
 }
 
