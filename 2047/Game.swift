@@ -44,7 +44,7 @@ class Game {
             let tile = self.tileGenerationStrategy.newTile(_availableSpaces())
             self.tiles[tile.location] = tile
             
-            if delegate {
+            if delegate != nil {
                 delegate!.game(self, didAddTile: tile)
             }
         }
@@ -59,9 +59,9 @@ class Game {
         
         for fromLocation in sortedLocations {
             let tile = self.tiles[fromLocation]
-            if !tile { continue }
+            if tile == nil { continue }
             if _moveTile(tile!, move: move) {
-                if self.delegate {
+                if self.delegate != nil {
                     self.delegate!.game(self, didMoveTile: tile!, from: fromLocation)
                 }
                 anyTileMoved = true
@@ -100,7 +100,7 @@ class Game {
                 self._trueScore += tile.value + 1
                 tile.canMerge = false
                 
-                if self.delegate {
+                if self.delegate != nil {
                     self.delegate!.game(self, didUpdateScore: self.score)
                 }
             }

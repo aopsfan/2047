@@ -14,17 +14,17 @@ class TileGridView: UIView {
     var tileViews = [Location: TileView]()
     var _coveredTileViews = [TileView]()
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         // Initialization code
     }
     
-    init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder)
     }
     
     func animate(animations: () -> ()) {
-        UIView.animateWithDuration(0.3, animations: animations, completion: { completed in
+        UIView.animateWithDuration(0.1, animations: animations, completion: { completed in
             self.removeCoveredTileViews()
             })
     }
@@ -37,8 +37,8 @@ class TileGridView: UIView {
         _coveredTileViews.removeAll()
     }
     
-    func addTileViewAt(location: Location, withLabel label: String) {
-        let tileView = TileView(frame: _frameFor(location))
+    func addTileViewAt(location: Location, withLabel label: String, appearanceSource: TileAppearance) {
+        let tileView = TileView(frame: _frameFor(location), appearanceSource: appearanceSource)
         tileView.labelText = label
         tileViews[location] = tileView
         
@@ -54,14 +54,15 @@ class TileGridView: UIView {
         tileViews[location] = nil
     }
     
-    func moveTileViewAt(fromLocation: Location, to toLocation: Location) {
+    func moveTileViewAt(fromLocation: Location, to toLocation: Location, appearanceSource: TileAppearance) {
         let tileView = tileViews[fromLocation]
-        self.bringSubviewToFront(tileView)
+        self.bringSubviewToFront(tileView!)
         tileView!.frame = _frameFor(toLocation)
+        tileView!.configureWith(appearanceSource)
         tileViews[fromLocation] = nil
         
         let oldTileView = tileViews[toLocation]
-        if oldTileView { _coveredTileViews.append(oldTileView!) }
+        if oldTileView != nil { _coveredTileViews.append(oldTileView!) }
         tileViews[toLocation] = tileView
     }
     

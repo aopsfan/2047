@@ -12,13 +12,21 @@ class GameplayViewController : UIViewController, GameDelegate {
     @IBOutlet var gridView: TileGridView!
     @IBOutlet var scoreLabel: UILabel!
     var game = Game()
+    let appearanceSources: [TileAppearance] = [
+        OrangeAppearance(),
+        CyanAppearance(),
+        GreyAppearance(),
+        MagentaAppearance(),
+        RedAppearance(),
+        BlackAppearance()
+    ]
     
     func game(game: Game, didAddTile tile: Tile) {
-        gridView.addTileViewAt(tile.location, withLabel: "\(tile.value)")
+        gridView.addTileViewAt(tile.location, withLabel: "\(tile.value)", appearanceSource: appearanceSourceFor(tile.value))
     }
     
     func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location) {
-        gridView.moveTileViewAt(fromLocation, to: tile.location)
+        gridView.moveTileViewAt(fromLocation, to: tile.location, appearanceSource: appearanceSourceFor(tile.value))
         gridView.setLabelTextForTileAt(tile.location, labelText: "\(tile.value)")
     }
     
@@ -53,26 +61,30 @@ class GameplayViewController : UIViewController, GameDelegate {
     }
     
     func swipeUp() {
-        _move(Up())
+        move(Up())
     }
     
     func swipeDown() {
-        _move(Down())
+        move(Down())
     }
     
     func swipeRight() {
-        _move(Right())
+        move(Right())
     }
     
     func swipeLeft() {
-        _move(Left())
+        move(Left())
+    }
+    
+    func appearanceSourceFor(value: Int) -> TileAppearance {
+        return appearanceSources.filter({ $0.availableForValue(value) })[0]
     }
     
     func refreshScore() {
         scoreLabel.text = "\(game.score)"
     }
     
-    func _move(move: Move) {
+    func move(move: Move) {
         gridView.animate {
             self.game.move(move)
         }
