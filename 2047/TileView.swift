@@ -30,7 +30,7 @@ class TileView: UIView {
     init(frame: CGRect, appearanceSource: TileAppearance) {
         _label = UILabel(frame: CGRectMake(0, 0, frame.width, frame.height))
         super.init(frame: frame)
-        _label.font = UIFont(name: "HelveticaNeue-Thin", size: 36.0)
+        _label.font = UIFont(name: "HelveticaNeue-Thin", size: 28.0)
         _label.adjustsFontSizeToFitWidth = true
         _label.textAlignment = .Center
         
