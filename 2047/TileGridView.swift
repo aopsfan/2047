@@ -9,8 +9,8 @@
 import UIKit
 
 class TileGridView: UIView {
-    let tileViewSize = CGSizeMake(70, 70)
-    let margin = 8
+    let tileViewSize = CGSizeMake(80, 80)
+    let margin = 0
     var tileViews = [Location: TileView]()
     var _coveredTileViews = [TileView]()
     

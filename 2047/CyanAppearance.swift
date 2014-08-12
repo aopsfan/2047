@@ -10,7 +10,7 @@ import UIKit
 
 class CyanAppearance: TileAppearance {
     func topColorRGB() -> [CGFloat] {
-        return [122, 252, 220]
+        return [62, 252, 205]
     }
     
     func bottomColorRGB() -> [CGFloat] {

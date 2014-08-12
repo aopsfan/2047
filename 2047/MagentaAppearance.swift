@@ -10,11 +10,11 @@ import UIKit
 
 class MagentaAppearance: TileAppearance {
     func topColorRGB() -> [CGFloat] {
-        return [254, 94, 139]
+        return [255, 147, 191]
     }
     
     func bottomColorRGB() -> [CGFloat] {
-        return [235, 0, 113]
+        return [229, 58, 140]
     }
     
     func labelColor() -> UIColor {

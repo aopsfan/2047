@@ -10,15 +10,15 @@ import UIKit
 
 class GreyAppearance: TileAppearance {
     func topColorRGB() -> [CGFloat] {
-        return [203, 203, 203]
+        return [220, 220, 235]
     }
     
     func bottomColorRGB() -> [CGFloat] {
-        return [121, 121, 121]
+        return [180, 180, 205]
     }
     
     func labelColor() -> UIColor {
-        return UIColor.whiteColor()
+        return UIColor.blackColor()
     }
     
     func availableForValue(value: Int) -> Bool {

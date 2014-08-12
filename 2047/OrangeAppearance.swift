@@ -14,7 +14,7 @@ class OrangeAppearance: TileAppearance {
     }
     
     func bottomColorRGB() -> [CGFloat] {
-        return [246, 152, 55]
+        return [255, 175, 64]
     }
     
     func labelColor() -> UIColor {
