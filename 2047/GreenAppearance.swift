@@ -1,20 +1,20 @@
 //
-//  MagentaAppearance.swift
+//  GreenAppearance.swift
 //  2047
 //
-//  Created by Bruce Ricketts on 8/9/14.
+//  Created by Bruce Ricketts on 8/12/14.
 //  Copyright (c) 2014 fireypotato. All rights reserved.
 //
 
 import UIKit
 
-class MagentaAppearance: TileAppearance {
+class GreenAppearance: TileAppearance {
     func topColorRGB() -> [CGFloat] {
-        return [255, 147, 191]
+        return [141, 202, 133]
     }
     
     func bottomColorRGB() -> [CGFloat] {
-        return [229, 58, 140]
+        return [0, 139, 68]
     }
     
     func labelColor() -> UIColor {
@@ -22,6 +22,6 @@ class MagentaAppearance: TileAppearance {
     }
     
     func availableFor(value: Int) -> Bool {
-        return value == 127
+        return value == 255
     }
 }

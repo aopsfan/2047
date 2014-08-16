@@ -14,10 +14,13 @@ class GameplayViewController : UIViewController, GameDelegate {
     var game = Game()
     let appearanceSources: [TileAppearance] = [
         OrangeAppearance(),
-        CyanAppearance(),
         GreyAppearance(),
+        SkyBlueAppearance(),
+        CyanAppearance(),
         MagentaAppearance(),
+        GreenAppearance(),
         RedAppearance(),
+        PurpleAppearance(),
         BlackAppearance()
     ]
     
@@ -77,7 +80,7 @@ class GameplayViewController : UIViewController, GameDelegate {
     }
     
     func appearanceSourceFor(value: Int) -> TileAppearance {
-        return appearanceSources.filter({ $0.availableForValue(value) })[0]
+        return appearanceSources.filter({ $0.availableFor(value) })[0]
     }
     
     func refreshScore() {

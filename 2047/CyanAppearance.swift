@@ -21,7 +21,7 @@ class CyanAppearance: TileAppearance {
         return UIColor.whiteColor()
     }
     
-    func availableForValue(value: Int) -> Bool {
-        return value == 15
+    func availableFor(value: Int) -> Bool {
+        return value == 63
     }
 }

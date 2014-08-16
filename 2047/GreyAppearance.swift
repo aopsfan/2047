@@ -21,7 +21,7 @@ class GreyAppearance: TileAppearance {
         return UIColor.blackColor()
     }
     
-    func availableForValue(value: Int) -> Bool {
-        return value == 31
+    func availableFor(value: Int) -> Bool {
+        return value == 15
     }
 }

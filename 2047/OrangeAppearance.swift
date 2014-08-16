@@ -21,7 +21,7 @@ class OrangeAppearance: TileAppearance {
         return UIColor.blackColor()
     }
     
-    func availableForValue(value: Int) -> Bool {
+    func availableFor(value: Int) -> Bool {
         return contains([1, 3, 7], value)
     }
 }

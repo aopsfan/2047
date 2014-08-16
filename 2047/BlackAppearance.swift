@@ -21,7 +21,7 @@ class BlackAppearance: TileAppearance {
         return UIColor.whiteColor()
     }
     
-    func availableForValue(value: Int) -> Bool {
+    func availableFor(value: Int) -> Bool {
         return true
     }
 }

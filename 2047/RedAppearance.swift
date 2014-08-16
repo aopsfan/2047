@@ -21,7 +21,7 @@ class RedAppearance: TileAppearance {
         return UIColor.whiteColor()
     }
     
-    func availableForValue(value: Int) -> Bool {
-        return value == 127
+    func availableFor(value: Int) -> Bool {
+        return value == 511
     }
 }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1021F0BF198B4F2300993F6B /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021F0BE198B4F2300993F6B /* TileView.swift */; };
 		1021F0C1198B51B500993F6B /* TileGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021F0C0198B51B500993F6B /* TileGridView.swift */; };
+		10660A3E199ED10D00E78482 /* PurpleAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10660A3D199ED10D00E78482 /* PurpleAppearance.swift */; };
+		10841B77199ABDB500293F1F /* SkyBlueAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10841B76199ABDB500293F1F /* SkyBlueAppearance.swift */; };
+		10841B79199ADBBA00293F1F /* GreenAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10841B78199ADBBA00293F1F /* GreenAppearance.swift */; };
 		108C09251978929E0065FAAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09241978929E0065FAAB /* AppDelegate.swift */; };
 		108C09271978929E0065FAAB /* GameplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108C09261978929E0065FAAB /* GameplayViewController.swift */; };
 		108C092A1978929E0065FAAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 108C09281978929E0065FAAB /* Main.storyboard */; };
@@ -73,6 +76,9 @@
 /* Begin PBXFileReference section */
 		1021F0BE198B4F2300993F6B /* TileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
 		1021F0C0198B51B500993F6B /* TileGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileGridView.swift; sourceTree = "<group>"; };
+		10660A3D199ED10D00E78482 /* PurpleAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurpleAppearance.swift; sourceTree = "<group>"; };
+		10841B76199ABDB500293F1F /* SkyBlueAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyBlueAppearance.swift; sourceTree = "<group>"; };
+		10841B78199ADBBA00293F1F /* GreenAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenAppearance.swift; sourceTree = "<group>"; };
 		108C091F1978929E0065FAAB /* 2047.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2047.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		108C09231978929E0065FAAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		108C09241978929E0065FAAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -231,10 +237,13 @@
 			children = (
 				10A22EAF1995C13100096528 /* TileAppearance.swift */,
 				10FD29D51995043D00994C48 /* OrangeAppearance.swift */,
-				10A22EB31995D3A100096528 /* CyanAppearance.swift */,
 				10A22EB51995D84900096528 /* GreyAppearance.swift */,
+				10841B76199ABDB500293F1F /* SkyBlueAppearance.swift */,
+				10A22EB31995D3A100096528 /* CyanAppearance.swift */,
 				10A22EB71995D9B900096528 /* MagentaAppearance.swift */,
+				10841B78199ADBBA00293F1F /* GreenAppearance.swift */,
 				10A22EB91995DAF900096528 /* RedAppearance.swift */,
+				10660A3D199ED10D00E78482 /* PurpleAppearance.swift */,
 				10A22EB11995C22100096528 /* BlackAppearance.swift */,
 			);
 			name = "Tile View Appearances";
@@ -350,7 +359,10 @@
 				10B8913A197C5882004C8316 /* Up.swift in Sources */,
 				10A22EB81995D9B900096528 /* MagentaAppearance.swift in Sources */,
 				108C094D197894D50065FAAB /* Tile.swift in Sources */,
+				10660A3E199ED10D00E78482 /* PurpleAppearance.swift in Sources */,
+				10841B77199ABDB500293F1F /* SkyBlueAppearance.swift in Sources */,
 				10A22EBA1995DAF900096528 /* RedAppearance.swift in Sources */,
+				10841B79199ADBBA00293F1F /* GreenAppearance.swift in Sources */,
 				108C0953197894F70065FAAB /* Vector.swift in Sources */,
 				10B89141197C5D66004C8316 /* Left.swift in Sources */,
 				1021F0C1198B51B500993F6B /* TileGridView.swift in Sources */,
