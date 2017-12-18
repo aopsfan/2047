@@ -9,23 +9,22 @@
 import Foundation
 
 protocol GameDelegate {
-    func game(game: Game, didAddTile tile: Tile)
-    func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location)
-    func game(game: Game, didUpdateScore score: Int)
+    func game(_ game: Game, didAddTile tile: Tile)
+    func game(_ game: Game, didMoveTile tile: Tile, from fromLocation: Location)
+    func game(_ game: Game, didUpdateScore score: Int)
 }
 
 protocol TileGenerationStrategy {
-    func newTile(availableSpaces: [Location]) -> Tile
+    func newTile(_ availableSpaces: [Location]) -> Tile
 }
 
 class RandomTileGenerator : TileGenerationStrategy {
-    func newTile(availableSpaces: [Location]) -> Tile {
+    func newTile(_ availableSpaces: [Location]) -> Tile {
         let locationIndex = arc4random() % UInt32(availableSpaces.count)
         let location = availableSpaces[Int(locationIndex)]
         
-        let availableValues = [1, 3]
-        let valueIndex = arc4random() % 2
-        let value = availableValues[Int(valueIndex)]
+        let valueIndex = arc4random() % 10
+        let value = Int(valueIndex) == 1 ? 4 : 2
         
         return Tile(location: location, value: value)
     }
@@ -34,12 +33,12 @@ class RandomTileGenerator : TileGenerationStrategy {
 class Game {
     var board = Board(4, 4)
     var tiles = [Location: Tile]()
-    var _trueScore = -1
-    var score: Int { return max(0, _trueScore) }
+    var score = 0
     var tileGenerationStrategy: TileGenerationStrategy = RandomTileGenerator()
     var delegate: GameDelegate? = nil
+    var mergeRule = DoublePlusOneMergeRule()
     
-    func addTiles(numberOfTiles: Int) {
+    func addTiles(_ numberOfTiles: Int) {
         for _ in 0..<numberOfTiles {
             let tile = self.tileGenerationStrategy.newTile(_availableSpaces())
             self.tiles[tile.location] = tile
@@ -50,17 +49,37 @@ class Game {
         }
     }
     
-    func move(move: Move) {
+    func isOver(availableDirections: [Direction]) -> Bool {
+        if _availableSpaces().count > 0 { return false }
+        
+        let notOver = board.allLocations().reduce(false) { (canMergeYet, location) in
+            if canMergeYet { return canMergeYet }
+            
+            let tile = self.tiles[location]! // this can't be nil or the method will have alread returned
+            return availableDirections.reduce(false) { (canMergeYet, direction) in
+                return canMergeYet || self._tileCanMerge(tile, direction: direction)
+            }
+        }
+        
+        return !notOver
+    }
+    
+    func _tileCanMerge(_ tile: Tile, direction: Direction) -> Bool {
+        let blockingTile = self.tiles[tile.location + direction.vector()]
+        return blockingTile != nil && mergeRule.valueByMergingTiles([tile, blockingTile!]) != nil
+    }
+    
+    func move(_ direction: Direction) {
         var anyTileMoved = false
         
-        let sortedLocations = sorted(self.board.allLocations()) {
-            return move.locationBeforeLocation($0, $1)
+        let sortedLocations = board.allLocations().sorted {
+            return direction.locationBeforeLocation($0, $1)
         }
         
         for fromLocation in sortedLocations {
             let tile = self.tiles[fromLocation]
             if tile == nil { continue }
-            if _moveTile(tile!, move: move) {
+            if _moveTile(tile!, direction: direction) {
                 if self.delegate != nil {
                     self.delegate!.game(self, didMoveTile: tile!, from: fromLocation)
                 }
@@ -69,45 +88,38 @@ class Game {
         }
         
         if anyTileMoved {
-            for (_, tile) in tiles { tile.canMerge = true }
+            for (_, tile) in tiles { tile.enableMerging() }
             self.addTiles(1)
         }
     }
     
-    func _moveTile(tile: Tile, move: Move) -> Bool {
+    func _moveTile(_ tile: Tile, direction: Direction) -> Bool {
         var tileMoved = false
         var tileMovedThisIteration = false
         
-        do {
-            tileMovedThisIteration = _moveTileOnce(tile, move: move)
+        repeat {
+            tileMovedThisIteration = _moveTileOnce(tile, direction: direction)
             tileMoved = tileMoved || tileMovedThisIteration
         } while tileMovedThisIteration
         
         return tileMoved
     }
     
-    func _moveTileOnce(tile: Tile, move: Move) -> Bool { // return whether tile moved
+    func _moveTileOnce(_ tile: Tile, direction: Direction) -> Bool { // return whether tile moved
         let fromLocation = tile.location
-        let toLocation = Location(fromLocation.x + move.vector().xDistance, fromLocation.y + move.vector().yDistance)
+        let toLocation = Location(fromLocation.x + direction.vector().xDistance, fromLocation.y + direction.vector().yDistance)
         let toTile = self.tiles[toLocation]
         
-        if !contains(self.board.allLocations(), toLocation) { // Tile is already at edge of board
-            return false
-        }
+        if !self.board.allLocations().contains(toLocation) { return false }
         
-        tile.goTo(toLocation, impedingTile: toTile) { (moved, merged) in
-            if merged {
-                self._trueScore += tile.value + 1
-                tile.canMerge = false
-                
-                if self.delegate != nil {
-                    self.delegate!.game(self, didUpdateScore: self.score)
-                }
+        if tile.moveBy(direction.vector(), blockingTile: toTile, mergeRule: mergeRule) {
+            if toTile != nil { // merged
+                score += tile.value
+                if self.delegate != nil { self.delegate!.game(self, didUpdateScore: self.score) }
             }
-            if moved {
-                self.tiles[fromLocation] = nil
-                self.tiles[toLocation] = tile
-            }
+            
+            self.tiles[fromLocation] = nil
+            self.tiles[toLocation] = tile
         }
         
         return tile.location == toLocation

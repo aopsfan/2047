@@ -12,5 +12,5 @@ protocol TileAppearance {
     func topColorRGB() -> [CGFloat]
     func bottomColorRGB() -> [CGFloat]
     func labelColor() -> UIColor
-    func availableFor(value: Int) -> Bool
+    func availableFor(_ value: Int) -> Bool
 }

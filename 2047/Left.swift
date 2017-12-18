@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Left: Move {
+class Left: Direction {
     func vector() -> Vector {
         return Vector(-1, 0)
     }
     
-    func locationBeforeLocation(location1: Location, _ location2: Location) -> Bool {
+    func locationBeforeLocation(_ location1: Location, _ location2: Location) -> Bool {
         return location1.x < location2.x // move left tiles first
     }
 }

@@ -11,108 +11,44 @@ import XCTest
 
 class TileTests: XCTestCase {
     let tile = Tile(location: Location(2, 2), value: 3)
+    let mergeRule = DoublePlusOneMergeRule()
     
     func testEquatable() {
         let identicalTile = Tile(location: Location(2, 2), value: 3)
         XCTAssertEqual(tile, identicalTile)
-        identicalTile.canMerge = false
-        XCTAssertNotEqual(tile, identicalTile)
-        
         XCTAssertNotEqual(tile, Tile(location: Location(2, 3), value: 3))
         XCTAssertNotEqual(tile, Tile(location: Location(2, 2), value: 7))
     }
     
-    func testGoToEmptyLocation() {
-        var moved = false
-        var merged = false
-        tile.goTo(Location(2, 1), impedingTile: nil, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
-        
-        XCTAssert(moved)
-        XCTAssertFalse(merged)
+    func testMoveByWithEmptyLocation() {
+        XCTAssert(tile.moveBy(Vector(0, -1), blockingTile: nil, mergeRule: mergeRule))
         XCTAssertEqual(tile.location, Location(2, 1))
         XCTAssertEqual(tile.value, 3)
     }
     
-    func testGoToEmptyLocationWithoutMerge() {
-        self.tile.canMerge = false
-        
-        var moved = false
-        var merged = false
-        tile.goTo(Location(2, 1), impedingTile: nil, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
-        
-        XCTAssert(moved)
-        XCTAssertFalse(merged)
-        XCTAssertEqual(tile.location, Location(2, 1))
-        XCTAssertEqual(tile.value, 3)
-    }
-    
-    func testGoToTileOfSameValue() {
-        var moved = false
-        var merged = false
-        let impedingTile = Tile(location: Location(2, 1), value: 3)
-        tile.goTo(Location(2, 1), impedingTile: impedingTile, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
-        
-        XCTAssert(moved)
-        XCTAssert(merged)
+    func testMoveByWithTileOfSameValue() {
+        let blockingTile = Tile(location: Location(2, 1), value: 3)
+        XCTAssert(tile.moveBy(Vector(0, -1), blockingTile: blockingTile, mergeRule: mergeRule))
         XCTAssertEqual(tile.location, Location(2, 1))
         XCTAssertEqual(tile.value, 7)
     }
     
-    func testGoToTileOfSameValueWithoutMerge() {
-        self.tile.canMerge = false
-        
-        var moved = false
-        var merged = false
-        let impedingTile = Tile(location: Location(2, 1), value: 3)
-        tile.goTo(Location(2, 1), impedingTile: impedingTile, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
-        
-        XCTAssertFalse(moved)
-        XCTAssertFalse(merged)
+    func testMoveByWithTileOfDifferentValue() {
+        let blockingTile = Tile(location: Location(2, 1), value: 3)
+        XCTAssertFalse(tile.moveBy(Vector(0, -1), blockingTile: blockingTile, mergeRule: mergeRule))
         XCTAssertEqual(tile.location, Location(2, 2))
         XCTAssertEqual(tile.value, 3)
     }
     
-    func testGoToTileOfDifferentValue() {
-        var moved = false
-        var merged = false
-        let impedingTile = Tile(location: Location(2, 1), value: 7)
-        tile.goTo(Location(2, 1), impedingTile: impedingTile, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
+    func testMoveByTwice() {
+        let firstTile = Tile(location: Location(2, 1), value: 3)
+        let secondTile = Tile(location: Location(2, 0), value: 7)
+        let upVector = Vector(0, -1)
         
-        XCTAssertFalse(moved)
-        XCTAssertFalse(merged)
-        XCTAssertEqual(tile.location, Location(2, 2))
-        XCTAssertEqual(tile.value, 3)
-    }
-    
-    func testGoToTileOfDifferentValueWithoutMerge() {
-        self.tile.canMerge = false
+        XCTAssert(tile.moveBy(upVector, blockingTile: firstTile, mergeRule: mergeRule))
+        XCTAssertFalse(tile.moveBy(upVector, blockingTile: secondTile, mergeRule: mergeRule))
         
-        var moved = false
-        var merged = false
-        let impedingTile = Tile(location: Location(2, 1), value: 7)
-        tile.goTo(Location(2, 1), impedingTile: impedingTile, {(_moved: Bool, _merged: Bool) in
-            moved = _moved
-            merged = _merged
-            })
-        
-        XCTAssertFalse(moved)
-        XCTAssertFalse(merged)
-        XCTAssertEqual(tile.location, Location(2, 2))
-        XCTAssertEqual(tile.value, 3)
+        XCTAssertEqual(tile.location, Location(2, 1))
+        XCTAssertEqual(tile.value, 7)
     }
 }

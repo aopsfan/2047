@@ -18,10 +18,10 @@ class MagentaAppearance: TileAppearance {
     }
     
     func labelColor() -> UIColor {
-        return UIColor.whiteColor()
+        return UIColor.white
     }
     
-    func availableFor(value: Int) -> Bool {
-        return value == 127
+    func availableFor(_ value: Int) -> Bool {
+        return value == 128
     }
 }

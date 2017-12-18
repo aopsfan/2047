@@ -29,3 +29,7 @@ struct Location: Equatable, Hashable {
 func ==(lhs: Location, rhs: Location) -> Bool {
     return lhs.x == rhs.x && lhs.y == rhs.y
 }
+
+func +(lhs: Location, rhs: Vector) -> Location {
+    return Location(lhs.x + rhs.xDistance, lhs.y + rhs.yDistance)
+}

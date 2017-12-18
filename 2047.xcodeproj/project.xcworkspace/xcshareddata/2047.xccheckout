@@ -10,29 +10,29 @@
 	<string>2047</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>EE8CDFA2-AD3D-4962-AB7D-6DA0FC1DD0DC</key>
+		<key>AEBA43BC61937AE80DC2E83BF8F81F7FB48A3B54</key>
 		<string>https://github.com/aopsfan/2047.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>2047.xcodeproj/project.xcworkspace</string>
+	<string>2047.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>EE8CDFA2-AD3D-4962-AB7D-6DA0FC1DD0DC</key>
+		<key>AEBA43BC61937AE80DC2E83BF8F81F7FB48A3B54</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/aopsfan/2047.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>EE8CDFA2-AD3D-4962-AB7D-6DA0FC1DD0DC</string>
+	<string>AEBA43BC61937AE80DC2E83BF8F81F7FB48A3B54</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>EE8CDFA2-AD3D-4962-AB7D-6DA0FC1DD0DC</string>
+			<string>AEBA43BC61937AE80DC2E83BF8F81F7FB48A3B54</string>
 			<key>IDESourceControlWCCName</key>
 			<string>2047</string>
 		</dict>

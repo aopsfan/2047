@@ -18,10 +18,10 @@ class PurpleAppearance: TileAppearance {
     }
     
     func labelColor() -> UIColor {
-        return UIColor.whiteColor()
+        return UIColor.white
     }
     
-    func availableFor(value: Int) -> Bool {
-        return value == 1023
+    func availableFor(_ value: Int) -> Bool {
+        return value == 1024
     }
 }

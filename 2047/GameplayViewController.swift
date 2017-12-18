@@ -24,16 +24,16 @@ class GameplayViewController : UIViewController, GameDelegate {
         BlackAppearance()
     ]
     
-    func game(game: Game, didAddTile tile: Tile) {
+    func game(_ game: Game, didAddTile tile: Tile) {
         gridView.addTileViewAt(tile.location, withLabel: "\(tile.value)", appearanceSource: appearanceSourceFor(tile.value))
     }
     
-    func game(game: Game, didMoveTile tile: Tile, from fromLocation: Location) {
+    func game(_ game: Game, didMoveTile tile: Tile, from fromLocation: Location) {
         gridView.moveTileViewAt(fromLocation, to: tile.location, appearanceSource: appearanceSourceFor(tile.value))
         gridView.setLabelTextForTileAt(tile.location, labelText: "\(tile.value)")
     }
     
-    func game(game: Game, didUpdateScore score: Int) {
+    func game(_ game: Game, didUpdateScore score: Int) {
         refreshScore()
     }
     
@@ -45,41 +45,37 @@ class GameplayViewController : UIViewController, GameDelegate {
         
         refreshScore()
         
-        let upRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUp")
-        let downRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDown")
-        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeRight")
-        let leftRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeft")
-        upRecognizer.direction = UISwipeGestureRecognizerDirection.Up
-        downRecognizer.direction = UISwipeGestureRecognizerDirection.Down
-        rightRecognizer.direction = UISwipeGestureRecognizerDirection.Right
-        leftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        let upRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeUp))
+        let downRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeDown))
+        let rightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeRight))
+        let leftRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeLeft))
+        upRecognizer.direction = UISwipeGestureRecognizerDirection.up
+        downRecognizer.direction = UISwipeGestureRecognizerDirection.down
+        rightRecognizer.direction = UISwipeGestureRecognizerDirection.right
+        leftRecognizer.direction = UISwipeGestureRecognizerDirection.left
         
         for recognizer in [upRecognizer, downRecognizer, rightRecognizer, leftRecognizer] {
             self.view.addGestureRecognizer(recognizer)
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
-    func swipeUp() {
+    @objc func swipeUp() {
         move(Up())
     }
     
-    func swipeDown() {
+    @objc func swipeDown() {
         move(Down())
     }
     
-    func swipeRight() {
+    @objc func swipeRight() {
         move(Right())
     }
     
-    func swipeLeft() {
+    @objc func swipeLeft() {
         move(Left())
     }
     
-    func appearanceSourceFor(value: Int) -> TileAppearance {
+    func appearanceSourceFor(_ value: Int) -> TileAppearance {
         return appearanceSources.filter({ $0.availableFor(value) })[0]
     }
     
@@ -87,9 +83,9 @@ class GameplayViewController : UIViewController, GameDelegate {
         scoreLabel.text = "\(game.score)"
     }
     
-    func move(move: Move) {
+    func move(_ direction: Direction) {
         gridView.animate {
-            self.game.move(move)
+            self.game.move(direction)
         }
     }
 }

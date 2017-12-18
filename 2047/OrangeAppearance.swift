@@ -18,10 +18,10 @@ class OrangeAppearance: TileAppearance {
     }
     
     func labelColor() -> UIColor {
-        return UIColor.blackColor()
+        return UIColor.black
     }
     
-    func availableFor(value: Int) -> Bool {
-        return contains([1, 3, 7], value)
+    func availableFor(_ value: Int) -> Bool {
+        return [2, 4, 8].contains(value)
     }
 }

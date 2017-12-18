@@ -12,9 +12,9 @@ import XCTest
 class PresetTileGenerator : TileGenerationStrategy {
     var nextTiles = [Tile]()
     
-    func newTile(availableSpaces: [Location]) -> Tile {
+    func newTile(_ availableSpaces: [Location]) -> Tile {
         let nextTile = self.nextTiles[0]
-        self.nextTiles.removeAtIndex(0)
+        self.nextTiles.remove(at: 0)
         return nextTile
     }
 }
@@ -23,14 +23,14 @@ class GameTests: XCTestCase {
     var game = Game()
     let tileGenerator = PresetTileGenerator()
     
-    func describe(identifier: String, beforeEach: () -> (), _ specs: [String: () -> ()]) {
-        println("\n>>>>>> SPEC BEGIN: \(identifier) <<<<<<\n\n")
+    func describe(_ identifier: String, beforeEach: () -> (), _ specs: [String: () -> ()]) {
+        print("\n>>>>>> SPEC BEGIN: \(identifier) <<<<<<\n\n")
         for spec in specs {
-            println("\(identifier) \(spec.0)")
+            print("\(identifier) \(spec.0)")
             beforeEach()
             spec.1()
         }
-        println("\n\n>>>>>> SPEC END: \(identifier) <<<<<<\n")
+        print("\n\n>>>>>> SPEC END: \(identifier) <<<<<<\n")
     }
     
     func resetGame() {
@@ -103,7 +103,7 @@ class GameTests: XCTestCase {
     }
     
     func testMoveTwoTilesOfSameValue() {
-        var (firstTile, secondTile): (Tile!, Tile!)
+        var (firstTile, secondTile): (Tile?, Tile?)
         var queuedTile: Tile!
         
         describe("when two tiles of same value moved",
@@ -112,13 +112,13 @@ class GameTests: XCTestCase {
                 firstTile = Tile(location: Location(2, 0), value: 1)
                 secondTile = Tile(location: Location(3, 0), value: 1)
                 queuedTile = Tile(location: Location(2, 1), value: 1)
-                self.tileGenerator.nextTiles = [firstTile, secondTile, queuedTile]
+                self.tileGenerator.nextTiles = [firstTile!, secondTile!, queuedTile]
                 self.game.addTiles(2)
             }, [
                 "should merge tiles aligned right when moved right": {
                     self.game.move(Right())
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
-                    XCTAssertEqual(firstTile.value, 3)
+                    XCTAssertEqual(firstTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 2)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -126,7 +126,7 @@ class GameTests: XCTestCase {
                 "should merge tiles and fall left when moved left": {
                     self.game.move(Left())
                     XCTAssertEqual(self.game.tiles[Location(0, 0)]!, secondTile)
-                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(secondTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 2)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -149,7 +149,7 @@ class GameTests: XCTestCase {
     }
     
     func testMoveTwoSeparatedTilesOfSameValue() {
-        var (firstTile, secondTile): (Tile!, Tile!)
+        var (firstTile, secondTile): (Tile?, Tile?)
         var queuedTile: Tile!
         
         describe("when two separated tiles of same value moved",
@@ -158,13 +158,13 @@ class GameTests: XCTestCase {
                 firstTile = Tile(location: Location(0, 0), value: 1)
                 secondTile = Tile(location: Location(2, 0), value: 1)
                 queuedTile = Tile(location: Location(2, 1), value: 1)
-                self.tileGenerator.nextTiles = [secondTile, firstTile, queuedTile]
+                self.tileGenerator.nextTiles = [secondTile!, firstTile!, queuedTile]
                 self.game.addTiles(2)
             }, [
                 "should merge tiles and fall right when moved right": {
                     self.game.move(Right())
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!, firstTile)
-                    XCTAssertEqual(firstTile.value, 3)
+                    XCTAssertEqual(firstTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 2)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -172,7 +172,7 @@ class GameTests: XCTestCase {
                 "should merge tiles aligned left when moved left": {
                     self.game.move(Left())
                     XCTAssertEqual(self.game.tiles[Location(0, 0)]!, secondTile)
-                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(secondTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 2)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -195,7 +195,7 @@ class GameTests: XCTestCase {
     }
     
     func testMoveTwoSeparatedTilesOfDifferentValue() {
-        var (firstTile, secondTile): (Tile!, Tile!)
+        var (firstTile, secondTile): (Tile?, Tile?)
         var queuedTile: Tile!
         
         describe("when two separated tiles of different value moved",
@@ -204,15 +204,15 @@ class GameTests: XCTestCase {
                 firstTile = Tile(location: Location(0, 0), value: 1)
                 secondTile = Tile(location: Location(2, 0), value: 3)
                 queuedTile = Tile(location: Location(2, 1), value: 1)
-                self.tileGenerator.nextTiles = [secondTile, firstTile, queuedTile]
+                self.tileGenerator.nextTiles = [secondTile!, firstTile!, queuedTile]
                 self.game.addTiles(2)
             }, [
                 "should fall right when moved right": {
                     self.game.move(Right())
                     XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!, secondTile)
-                    XCTAssertEqual(firstTile.value, 1)
-                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(firstTile?.value, 1)
+                    XCTAssertEqual(secondTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 3)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -221,8 +221,8 @@ class GameTests: XCTestCase {
                     self.game.move(Left())
                     XCTAssertEqual(self.game.tiles[Location(0, 0)]!, firstTile)
                     XCTAssertEqual(self.game.tiles[Location(1, 0)]!, secondTile)
-                    XCTAssertEqual(firstTile.value, 1)
-                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(firstTile?.value, 1)
+                    XCTAssertEqual(secondTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 3)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -245,7 +245,7 @@ class GameTests: XCTestCase {
     }
     
     func testMoveThreeParallelTilesOfSameValue() {
-        var (firstTile, secondTile, thirdTile): (Tile!, Tile!, Tile!)
+        var (firstTile, secondTile, thirdTile): (Tile?, Tile?, Tile?)
         var queuedTile: Tile!
         
         describe("when three parallel tiles of same value moved",
@@ -255,15 +255,15 @@ class GameTests: XCTestCase {
                 secondTile = Tile(location: Location(2, 0), value: 1)
                 thirdTile = Tile(location: Location(3, 0), value: 1)
                 queuedTile = Tile(location: Location(2, 1), value: 1)
-                self.tileGenerator.nextTiles = [firstTile, secondTile, thirdTile, queuedTile]
+                self.tileGenerator.nextTiles = [firstTile!, secondTile!, thirdTile!, queuedTile]
                 self.game.addTiles(3)
             }, [
                 "should fall right and merge right two tiles when moved right": {
                     self.game.move(Right())
                     XCTAssertEqual(self.game.tiles[Location(2, 0)]!, firstTile)
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!, secondTile)
-                    XCTAssertEqual(firstTile.value, 1)
-                    XCTAssertEqual(secondTile.value, 3)
+                    XCTAssertEqual(firstTile?.value, 1)
+                    XCTAssertEqual(secondTile?.value, 3)
                     XCTAssertEqual(self.game.tiles.count, 3)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -272,8 +272,8 @@ class GameTests: XCTestCase {
                     self.game.move(Left())
                     XCTAssertEqual(self.game.tiles[Location(0, 0)]!, secondTile)
                     XCTAssertEqual(self.game.tiles[Location(1, 0)]!, thirdTile)
-                    XCTAssertEqual(secondTile.value, 3)
-                    XCTAssertEqual(thirdTile.value, 1)
+                    XCTAssertEqual(secondTile?.value, 3)
+                    XCTAssertEqual(thirdTile?.value, 1)
                     XCTAssertEqual(self.game.tiles.count, 3)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 },
@@ -283,9 +283,9 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(0, 0)]!, firstTile)
                     XCTAssertEqual(self.game.tiles[Location(2, 0)]!, secondTile)
                     XCTAssertEqual(self.game.tiles[Location(3, 0)]!, thirdTile)
-                    XCTAssertEqual(firstTile.value, 1)
-                    XCTAssertEqual(secondTile.value, 1)
-                    XCTAssertEqual(thirdTile.value, 1)
+                    XCTAssertEqual(firstTile?.value, 1)
+                    XCTAssertEqual(secondTile?.value, 1)
+                    XCTAssertEqual(thirdTile?.value, 1)
                     XCTAssertEqual(self.game.tiles.count, 3)
                 },
                 
@@ -294,9 +294,9 @@ class GameTests: XCTestCase {
                     XCTAssertEqual(self.game.tiles[Location(0, 3)]!, firstTile)
                     XCTAssertEqual(self.game.tiles[Location(2, 3)]!, secondTile)
                     XCTAssertEqual(self.game.tiles[Location(3, 3)]!, thirdTile)
-                    XCTAssertEqual(firstTile.value, 1)
-                    XCTAssertEqual(secondTile.value, 1)
-                    XCTAssertEqual(thirdTile.value, 1)
+                    XCTAssertEqual(firstTile?.value, 1)
+                    XCTAssertEqual(secondTile?.value, 1)
+                    XCTAssertEqual(thirdTile?.value, 1)
                     XCTAssertEqual(self.game.tiles.count, 4)
                     XCTAssertEqual(self.game.tiles[Location(2, 1)]!, queuedTile)
                 }
@@ -304,11 +304,11 @@ class GameTests: XCTestCase {
     }
     
     func testAdvancedCase() {
-        var (row1Tile1, row1Tile2, row1Tile3): (Tile!, Tile!, Tile!)
-        var (row2Tile1, row2Tile2): (Tile!, Tile!)
+        var (row1Tile1, row1Tile2, row1Tile3): (Tile?, Tile?, Tile?)
+        var (row2Tile1, row2Tile2): (Tile?, Tile?)
         var row3Tile1: Tile!
-        var (row4Tile1, row4Tile2): (Tile!, Tile!)
-        var (queuedTile1, queuedTile2, queuedTile3, queuedTile4): (Tile!, Tile!, Tile!, Tile!)
+        var (row4Tile1, row4Tile2): (Tile?, Tile?)
+        var (queuedTile1, queuedTile2, queuedTile3, queuedTile4): (Tile?, Tile?, Tile?, Tile?)
         
         describe("advanced case",
             beforeEach: {
@@ -326,8 +326,8 @@ class GameTests: XCTestCase {
                 queuedTile4 = Tile(location: Location(0, 1), value: 1)
                 
                 self.tileGenerator.nextTiles = [
-                    row1Tile1, row1Tile2, row1Tile3, row2Tile1, row2Tile2, row3Tile1, row4Tile1, row4Tile2,
-                    queuedTile1, queuedTile2, queuedTile3, queuedTile4
+                    row1Tile1!, row1Tile2!, row1Tile3!, row2Tile1!, row2Tile2!, row3Tile1, row4Tile1!, row4Tile2!,
+                    queuedTile1!, queuedTile2!, queuedTile3!, queuedTile4!
                 ]
                 self.resetGame()
                 self.game.addTiles(8)

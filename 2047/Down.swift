@@ -8,12 +8,12 @@
 
 import Foundation
 
-class Down: Move {
+class Down: Direction {
     func vector() -> Vector {
         return Vector(0, 1)
     }
     
-    func locationBeforeLocation(location1: Location, _ location2: Location) -> Bool {
+    func locationBeforeLocation(_ location1: Location, _ location2: Location) -> Bool {
         return location1.y > location2.y // move bottom tiles first
     }
 }

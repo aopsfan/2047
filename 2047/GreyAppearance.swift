@@ -18,10 +18,10 @@ class GreyAppearance: TileAppearance {
     }
     
     func labelColor() -> UIColor {
-        return UIColor.blackColor()
+        return UIColor.black
     }
     
-    func availableFor(value: Int) -> Bool {
-        return value == 15
+    func availableFor(_ value: Int) -> Bool {
+        return value == 16
     }
 }
